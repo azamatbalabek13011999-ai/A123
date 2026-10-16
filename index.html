@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Smart мұғалім — ҚМЖ құрастырушы</title>
+<style>
+:root{--bg:#f8f5fc;--card:#fff;--ink:#3b3550;--mut:#8a84a0;--line:#e6e0f1;--p1:#cdb4f0;--p2:#bfe3d4;--p3:#ffd9c7;--p4:#cfe6f5;--btn:#9b7fd1;--btn2:#7fc4a8;--btn3:#f2a98a;--tb:#d9d2ea;--th:#efe9fa;--box:#faf7ff;--pg:#fff;}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1d1a29;--card:#272336;--ink:#ece8f7;--mut:#a39cbc;--line:#3a3550;--p1:#4b3d73;--p2:#2f5547;--p3:#6b4636;--p4:#2f4b62;--btn:#8d70c4;--btn2:#4f9c80;--btn3:#c98366;--tb:#4a4463;--th:#332e48;--box:#2d2840;--pg:#272336;}}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.5}
+header{background:linear-gradient(120deg,var(--p1),var(--p4) 55%,var(--p2));padding:26px 20px;text-align:center}
+header h1{margin:0;font-size:clamp(26px,5vw,38px);letter-spacing:.3px}
+header p{margin:6px 0 0;color:var(--ink);opacity:.8}
+main{max-width:1200px;margin:22px auto;padding:0 16px;display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 6px 22px rgba(120,100,170,.08)}
+.card h2{margin:0 0 12px;font-size:18px}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:11px;background:var(--box);color:var(--ink);font:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--p1)}
+textarea{min-height:70px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+button{border:0;border-radius:12px;padding:11px 16px;font:inherit;font-weight:600;color:#fff;background:var(--btn);cursor:pointer}
+button.g{background:var(--btn2)}button.o{background:var(--btn3)}
+button:hover{filter:brightness(1.06)}
+.hint{font-size:12.5px;color:var(--mut);margin-top:10px}
+#empty{padding:50px 10px;text-align:center;color:var(--mut)}
+#page{background:var(--pg);border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto}
+#doc{font-family:"Times New Roman",serif;font-size:13px;min-width:640px}
+#doc table{border-collapse:collapse;width:100%;margin-bottom:0}
+#doc td,#doc th{border:1px solid var(--tb);padding:5px 7px;vertical-align:top}
+#doc th,#doc .lb{background:var(--th);font-weight:bold}
+#doc .sec{background:var(--p3);font-weight:bold;text-align:center}
+#doc [contenteditable]:focus{outline:2px dashed var(--p1)}
+#doc p{margin:0 0 4px}
+.bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.tag{font-size:12px;background:var(--p2);padding:3px 10px;border-radius:20px}
+footer{text-align:center;color:var(--mut);font-size:12.5px;padding:18px}
+</style>
+</head>
+<body>
+<header><h1>🎓 Smart мұғалім</h1><p>Қысқа мерзімді жоспарды (ҚМЖ) бір минутта құрастырыңыз — тегін, барлық пәнге</p></header>
+<main>
+<section class="card">
+<h2>📝 Мәліметтер</h2>
+<label>Пән *</label>
+<select id="subj"></select>
+<label>Сабақтың тақырыбы *</label>
+<input id="topic" placeholder="Мысалы: Бөлшектерді қосу және азайту">
+<label>Оқу бағдарламасына сәйкес оқыту мақсаты *</label>
+<textarea id="obj" placeholder="Мысалы: 5.1.2.3 Жай бөлшектерді қосу және азайту ережесін қолдану"></textarea>
+<label>Құндылықтар</label>
+<input id="val" list="vals" placeholder="Мысалы: Білім, Ынтымақтастық">
+<datalist id="vals"><option value="Отансүйгіштік"><option value="Бірлік"><option value="Еңбек және шығармашылық"><option value="Құрмет"><option value="Ынтымақтастық"><option value="Ашықтық"><option value="Адалдық"><option value="Жауапкершілік"><option value="Білім және ғылым"></datalist>
+<label>Бөлім</label>
+<input id="sect" placeholder="Мысалы: 5.1 Жай бөлшектер">
+<label>Педагогтің аты-жөні</label>
+<input id="tch">
+<div class="row">
+<div><label>Күні</label><input id="date" type="date"></div>
+<div><label>Сынып</label><input id="cls" placeholder="5 «А»"></div>
+<div><label>Қатысқан</label><input id="in" type="number" min="0"></div>
+</div>
+<label>Қатыспағандар саны</label>
+<input id="out" type="number" min="0">
+<div class="btns">
+<button onclick="gen(0)">✨ Құрастыру</button>
+<button class="o" onclick="gen(1)">🔄 Басқа нұсқа</button>
+</div>
+<p class="hint">Тек тақырып пен мақсатты жазсаңыз жеткілікті — қалғанын жүйе өзі толтырады. Жасалған мәтінді оң жақтан тікелей түзетуге болады.</p>
+</section>
+<section class="card">
+<div class="bar"><h2 style="margin:0">📄 Дайын ҚМЖ</h2><div style="display:flex;gap:8px;align-items:center"><span class="tag" id="tg" hidden></span><button class="g" id="dl" onclick="dl()" hidden>⬇ Word-қа жүктеу</button></div></div>
+<div id="empty">Сол жақтағы форманы толтырып, «Құрастыру» батырмасын басыңыз 🌸</div>
+<div id="page" hidden><div id="doc" contenteditable="true" spellcheck="false"></div></div>
+</section>
+</main>
+<footer>Smart мұғалім · ҚМЖ құрастырушы · Файл Word (.doc) форматында сақталады</footer>
+
+<script>
+// ---------- Деректер ----------
+const SUBJ={
+"Қазақ тілі":"lang","Қазақ әдебиеті":"soc","Орыс тілі":"lang","Орыс әдебиеті":"soc","Ағылшын тілі":"lang",
+"Математика":"sci","Алгебра":"sci","Геометрия":"sci","Информатика":"sci","Физика":"sci","Химия":"sci",
+"Биология":"nat","География":"nat","Жаратылыстану":"nat","Дүниетану":"nat",
+"Қазақстан тарихы":"soc","Дүниежүзі тарихы":"soc","Құқық негіздері":"soc","Өзін-өзі тану":"soc","Көркем еңбек":"art","Музыка":"art","Технология":"art","Дене шынықтыру":"art","Бастауыш сынып (кешенді)":"nat","Басқа пән":"soc"};
+const CAT={
+lang:{res:"Оқулық, Wordwall.net, Quizizz.com",plat:["Wordwall","LearningApps","Quizizz","Kahoot!"],ind:["кесте толтыру","мәтінмен жұмыс (сұрақ-жауап кестесі)","сөйлем құрастыру және талдау кестесі"],val:"Ынтымақтастық"},
+sci:{res:"Оқулық, Bilimland.kz, LearningApps.org, YouTube",plat:["LearningApps","Kahoot!","Quizizz","Bilimland"],ind:["деңгейлік тапсырмалар (A, B, C)","алгоритм немесе блок-схема","есеп шығару кестесі"],val:"Білім және ғылым"},
+nat:{res:"Оқулық, Bilimland.kz, YouTube, презентация",plat:["Wordwall","LearningApps","Kahoot!","Quizizz"],ind:["кесте, сызба немесе графикалық тапсырма","сурет бойынша тапсырма","схема толтыру"],val:"Жауапкершілік"},
+soc:{res:"Оқулық, Bilimland.kz, YouTube, Wordwall.net",plat:["Wordwall","Quizizz","Kahoot!","LearningApps"],ind:["хронологиялық кесте / салыстыру кестесі","қысқа эссе немесе сұрақ-жауап","деңгейлік тапсырмалар (A, B, C)"],val:"Отансүйгіштік"},
+art:{res:"Оқулық, YouTube, презентация, Canva.com",plat:["Canva","Wordwall","Kahoot!","LearningApps"],ind:["графикалық тапсырма (сурет, сызба)","шығармашылық жұмыс","кесте толтыру"],val:"Еңбек және шығармашылық"}};
+const OY=["Миға шабуыл","«Қызықты сурет»","«Бұл не?» ойыны","«Сөз бұлты»","Болжау әдісі","«Иә / Жоқ» сұрақтары"];
+const EXP=["бейнеролик қарау","презентация","жасанды интеллект (ЖИ) құралы арқылы көрнекі түсіндіру","интерактивті тақта"];
+const PAIR=["Think–Pair–Share («Ойлан–Жұптас–Бөліс»)","«Кесте толтыру»","«Өзара тексеру»","«Сұрақ–жауап» жұптық сұхбаты","«Венн диаграммасы»"];
+const GRP=["«Мозайка» (Jigsaw)","«Кубизм»","«Ойлан, тап, қорға»","«Кластер»","«Шеңбер бойымен» (Round Robin)"];
+const GT=["функционалдық сауаттылық","қаржылық сауаттылық","пән аралық байланыс"];
+const GTD={"функционалдық сауаттылық":"өмірлік жағдаят беріліп, оқушылар тақырып бойынша шешім ұсынады","қаржылық сауаттылық":"отбасы бюджеті, шығын-табыс немесе сатып алу жағдаяты арқылы тақырыпты қолданады","пән аралық байланыс":"тақырыпты басқа пәндермен (мысалы, тарих, география, ІТ) байланыстырып, постер немесе кесте дайындайды"};
+const FIN=["Тест (5 сұрақ, Quizizz / Kahoot!)","«Сәйкестендір» жұмыс парағы","«Кім жылдам?» қысқа тест","Пысықтау сұрақтары мен жұмыс парағы"];
+const REF=["«Бас бармақ»","«Смайликтер»","«3–2–1» рефлексиясы","«Жылу өлшегіш»","«Бүгін мен...» сөйлемін жалғастыр"];
+// ---------- Көмекші ----------
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let seed=0;
+function hash(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h}
+let H=0;const pick=(a,k)=>a[(H+seed*(k+3)+k*7)%a.length];
+for(const k of Object.keys(SUBJ)){const o=document.createElement("option");o.textContent=k;$("subj").appendChild(o)}
+$("date").valueAsDate=new Date();
+function fmt(d){if(!d)return"";const[y,m,dd]=d.split("-");return dd+"."+m+"."+y}
+const L=(t)=>"<p>"+t+"</p>";
+const dsc=(arr,b)=>"<p><b>Дескриптор:</b> <b>"+b+" балл</b></p>"+arr.map(x=>"<p>– "+x+"</p>").join("");
+
+// ---------- Құрастыру ----------
+function gen(re){
+  const topic=$("topic").value.trim(),obj=$("obj").value.trim().replace(/[.\s]+$/,"");
+  if(!topic||!obj){alert("Тақырып пен оқыту мақсатын жазыңыз.");(topic?$("obj"):$("topic")).focus();return}
+  seed=re?seed+1:0;H=hash(topic+$("subj").value);
+  const s=$("subj").value,c=CAT[SUBJ[s]],T="«"+esc(topic)+"»";
+  const val=$("val").value.trim()||c.val;
+  const oy=pick(OY,0),ex=pick(EXP,1),pr=pick(PAIR,2),gr=pick(GRP,3),pl=pick(c.plat,4),gt=pick(GT,5),ind=pick(c.ind,6),fin=pick(FIN,7),rf=pick(REF,8);
+  const goal="<p><b>Барлық оқушылар:</b> "+esc(obj)+";</p><p><b>Көпшілігі:</b> "+T+" тақырыбы бойынша мысалдар келтіріп, ақпаратты салыстырады;</p><p><b>Кейбір оқушылар:</b> алған білімін жаңа жағдайда қолданып, өз қорытындысын жасайды.</p>";
+  const R=c.res;
+  const rows=[
+  ["Сабақтың басы",1,
+   L("<b>Ұйымдастыру кезеңі:</b> оқушылармен амандасу, түгендеу, жағымды психологиялық ахуал қалыптастыру.")+L("<b>Әдісі:</b> «"+oy+"».")+L("<b>Ой қозғау:</b> "+T+" тақырыбына байланысты сурет/сұрақ ұсынып, оқушыларды тақырыпты болжауға бағыттайды.")+L("<b>Үй тапсырмасын пысықтау:</b> өткен тақырып бойынша 2–3 қысқа сұрақ."),
+   L("Сәлемдеседі, сабаққа дайындалады. «"+oy+"» әдісі бойынша ойын бөліседі, тақырыпқа болжам жасайды, өткен білімін еске түсіреді."),
+   L("Ауызша мадақтау"),L(R.split(",")[0])],
+  ["Сабақтың ортасы",5,
+   L("<b>Жаңа сабақ:</b> түсіндіру әдісі — "+ex+".")+L(T+" тақырыбы бойынша жаңа материалды түсіндіреді. Сабақтың мақсатымен таныстырады.")+L("<b>Тақырып бойынша үш сұрақ:</b>")+L("1. "+T+" дегеніміз не?")+L("2. "+T+" тақырыбының негізгі белгілері мен ерекшеліктері қандай?")+L("3. "+T+" тақырыбын күнделікті өмірде қалай қолдануға болады?"),
+   L("Материалды қарап, тыңдап, дәптерге түйін жазады. Берілген үш сұраққа жауап береді және кері байланысқа түседі."),
+   L("<b>1 балл</b>")+L("Сұраққа дұрыс жауап береді – 1 балл"),L(R+". Қосымша: YouTube бейнеролик, презентация.")],
+  ["",0,
+   L("<b>Жұптық жұмыс:</b> әдіс — "+pr+".")+L("Қадамдары: 1) жұп құрады; 2) "+T+" бойынша тапсырма береді; 3) орындау уақытын (5–7 мин) белгілейді; 4) жұптардың жауабын тыңдайды.")+L("Тапсырма: кесте/схема толтыру арқылы негізгі ұғымдарды анықтау."),
+   L("Жұппен тапсырманы талқылайды, кестені толтырады, нәтижесін ұсынады. Жұбының жұмысын критерий бойынша бағалайды."),
+   dsc(["тапсырманы толық орындайды – 1 балл","жұбының жұмысын бағалайды – 1 балл"],2),L("Оқулық, жұмыс парағы, "+pl)],
+  ["",0,
+   L("<b>Топтық жұмыс:</b> «"+gr.replace(/[«»]/g,"")+"» әдісі / "+pl+" платформасындағы ойын.")+L("<b>Тапсырма ("+gt+"):</b> "+T+" тақырыбы бойынша — "+GTD[gt]+".")+L("Қолданылатын ресурстар: "+pl+", оқулық, маркер, A3 қағаз."),
+   L("Топ мүшелері рөлге бөлінеді (спикер, хатшы, уақыт бақылаушы, суретші). Тапсырманы бірлесіп орындайды, нәтижені постермен қорғайды, басқа топты бағалайды."),
+   dsc(["тапсырманы толық әрі дұрыс орындайды – 1 балл","топта бірлесіп жұмыс істеп, нәтижесін қорғайды – 1 балл"],2),L(pl+" (сілтеме), оқулық")],
+  ["",0,
+   L("<b>Жеке тапсырма:</b> "+ind+".")+L("Орындалу тәртібі: 1) тапсырманы оқу; 2) өз деңгейін таңдау; 3) орындау (7–10 мин); 4) шешімді тексеру.")+L("Тақырып: "+T+"."),
+   L("Тапсырма түріне сәйкес жеке жұмысты өздігінен орындайды, қадамдарды дәптерде көрсетеді, жауабын өзі тексереді."),
+   dsc(["тапсырманың 1-деңгейін орындайды – 1 балл","2-деңгейін орындайды – 1 балл","3-деңгейін орындап, нәтижені түсіндіреді – 1 балл"],3),L("Жұмыс парағы, оқулық, "+R.split(",")[1].trim())],
+  ["",0,
+   L("<b>Сабақты қорытындылау:</b> "+fin+".")+L("Мұғалім орындалу ережесін түсіндіреді, нәтижені бірге талқылайды."),
+   L("Тапсырманың ережесі бойынша қадамдарды орындайды, қателерін анықтап, түзетеді."),
+   dsc(["тапсырмалардың 50%-дан астамын дұрыс орындайды – 1 балл","барлығын дұрыс орындайды – 1 балл"],2),L(pl+", жұмыс парағы")],
+  ["Сабақтың соңы",1,
+   L("<b>Оқушыны бағалау және рефлексия:</b> «"+rf.replace(/[«»]/g,"")+"» әдісі.")+L("Жиналған баллдарды (10 балл) санап, бағаны шығарады.")+L("<b>Үйге тапсырма:</b> "+T+" тақырыбы бойынша қысқа шығармашылық немесе практикалық тапсырма орындау."),
+   L("Сабаққа кері байланыс жасайды, өз жетістігін айтады, үй тапсырмасын жазып алады."),
+   L("Оқушыларды бағалайды (жиынтық: 10 балл)"),L(R.split(",")[0]+", Stickers/Smile карточкалары")]];
+  let h='<p style="text-align:center"><b>Қысқа мерзімді жоспар</b></p>';
+  h+='<table><tr><td class="lb" width="28%">Бөлім:</td><td colspan="2" contenteditable>'+esc($("sect").value)+'</td></tr>'
+   +'<tr><td class="lb">Педагогтің аты-жөні:</td><td colspan="2">'+esc($("tch").value)+'</td></tr>'
+   +'<tr><td class="lb">Күні:</td><td colspan="2">'+fmt($("date").value)+'</td></tr>'
+   +'<tr><td><b>Сынып:</b> '+esc($("cls").value)+'</td><td><b>Қатысушылар саны:</b> '+esc($("in").value)+'</td><td><b>Қатыспағандар саны:</b> '+esc($("out").value)+'</td></tr>'
+   +'<tr><td class="lb">Сабақтың тақырыбы:</td><td colspan="2">'+esc(topic)+'</td></tr>'
+   +'<tr><td class="lb">Оқу бағдарламасына сәйкес оқыту мақсаттары:</td><td colspan="2">'+esc(obj)+'</td></tr>'
+   +'<tr><td class="lb">Сабақтың мақсаты:</td><td colspan="2">'+goal+'</td></tr>'
+   +'<tr><td class="lb">Құндылықтар:</td><td colspan="2">'+esc(val)+'</td></tr></table>'
+   +'<table><tr><td class="sec" colspan="5">Сабақтың барысы</td></tr>'
+   +'<tr><th width="12%">Сабақтың кезеңі / уақыты</th><th width="30%">Мұғалімнің іс-әрекеті</th><th width="25%">Оқушының іс-әрекеті</th><th width="15%">Бағалау</th><th width="18%">Ресурстар</th></tr>';
+  const tm={0:"",1:"",2:"",3:"",4:"",5:""};
+  const t=["5 мин","8 мин","6 мин","6 мин","7 мин","8 мин"];
+  rows.forEach((r,i)=>{
+    h+="<tr>"+(r[0]?'<td class="lb" rowspan="'+r[1]+'">'+r[0]+"</td>":"")+"<td>"+r[2].replace(/^<p>/,"<p><i>("+t[i]+")</i> ")+"</td><td>"+r[3]+"</td><td>"+r[4]+"</td><td>"+r[5]+"</td></tr>";
+  });
+  h+='</table><p><br>Тексерілді:_____________</p>';
+  // rowspan түзету: бірінші баған бар жолдар — бастапқы 0,1,2,... индекстері
+  $("doc").innerHTML=h.replace('rowspan="1"','rowspan="1"');
+  $("empty").hidden=true;$("page").hidden=false;$("dl").hidden=false;
+  $("tg").hidden=false;$("tg").textContent=s+" · "+(re?"жаңа нұсқа":"1-нұсқа");
+  $("page").scrollIntoView({behavior:"smooth",block:"start"});
+}
+// ---------- Word жүктеу ----------
+function dl(){
+  const body=$("doc").innerHTML;
+  const css="@page{size:21cm 29.7cm;margin:1.5cm 1.5cm 1.5cm 2.5cm}body{font-family:'Times New Roman',serif;font-size:11pt}table{border-collapse:collapse;width:100%}td,th{border:1px solid #000;padding:3pt;vertical-align:top;font-size:10.5pt}p{margin:0 0 3pt}.lb,th{background:#efe9fa;font-weight:bold}.sec{background:#ffd9c7;font-weight:bold;text-align:center}";
+  const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>ҚМЖ</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--><style>'+css+'</style></head><body>'+body.replace(/ contenteditable="[^"]*"/g,"")+'</body></html>';
+  const blob=new Blob(["\ufeff"+html],{type:"application/msword;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="ҚМЖ_"+($("topic").value.trim().replace(/[\\/:*?"<>|\s]+/g,"_").slice(0,40)||"жоспар")+".doc";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+</script>
+</body>
+</html>
